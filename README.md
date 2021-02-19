@@ -26,7 +26,7 @@ If you already have the cabal executable, you can upgrade it by running:
  cabal user-config update
 ```
 
-From the  directory 'intuitR' run the command:
+From the  directory `intuitR` run the command:
 
  ```console
  cabal install
@@ -152,4 +152,4 @@ Experiments
 
 The directory `timings` contains a detailed account of the
 experiments we have performed with timeout 600 seconds on a machine 
-Intel  i7-8700 CPU@3.20GHz with 16GB memory.
+Intel  i7-8700 CPU, 3.20GHz, 16GB memory.
