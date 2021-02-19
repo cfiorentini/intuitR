@@ -1,10 +1,10 @@
 intuitT
 =======
 
-An implementation of  Claessen and Rosen intuit (https://github.com/koengit/intuit)
+An implementation of  Claessen and Rosen `intuit` (https://github.com/koengit/intuit)
 with the trace computations.
 
-The installation and usage instructions are similar to intuitR:
+The installation and usage instructions are similar to `intuitR`:
 
 - To install, from the directory  `intuitT` run
 

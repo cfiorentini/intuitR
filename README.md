@@ -6,7 +6,7 @@ An efficient SAT-based theorem prover for Intuitionistic Propostional Logic.
 It is implemented on the top of the prover `intuit` by Claessen and Rosen
 (https://github.com/koengit/intuit).
 
-An implementation of intuit with the trace of computations and the
+An implementation of `intuit` with the trace of computations and the
 construction of derivations/countermodels is available at the
 directory `intuitT`
 
@@ -70,7 +70,7 @@ Note that:
 
 -  files .tex  are compiled using  `pdflatex`
 -  files .gv   are compiled using the command `dot` of
-   `Graphviz - Graph Visualization Software` (https://graphviz.org/).
+   [Graphviz - Graph Visualization Software](https://graphviz.org/).
 
 Both the commands `pdflatex` and `dot` must be in your PATH variable.
 
@@ -122,7 +122,7 @@ Running Benchmarks
 ------------------
 
 The directory `Benchmarks` contains the files corresponding to the 1200 problems used in the experiments
-(actually, the 28 problems not solved by intuitR and intuit within 600secs have been moved
+(actually, the 28 problems not solved by `intuitR` and `intuit` within 600secs have been moved
 into the subdirectory `_other_benckmarks_SYJ202`).
 
 To run the benchmarks and analyze the results, from the directory
@@ -135,7 +135,7 @@ For instance, if the timeout is 600 secs:
  analyze_data.sh 600
 ```
 
-If you haved installed intuit, the scripts also perform the tests with intuit.
+If you haved installed `intuit`, the scripts also perform the tests with `intuit`.
 Note that  commands  `intuitR` (and `intuit`) must be in your PATH variable.
 
 To translate the benchmarks into fCube and IntHistGC syntax, run:
