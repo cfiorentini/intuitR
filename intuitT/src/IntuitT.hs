@@ -103,7 +103,7 @@ processTrace traceLev file inputForms =
            putStrLn $ "==== IMPLICATION CLAUSES (" ++ show countIcs ++  ") ====" ,
            putStr $ unlines $ map printImplClause ics 
            ]) -- end when
-     putStrLn ("+++ Proving (intuitR)")
+     putStrLn ("+++ Proving (intuitT)")
      hFlush stdout
      start2 <- getCPUTime
      proveProblem  traceLev file cs ics mainGoal
