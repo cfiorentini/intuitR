@@ -3,8 +3,9 @@ intuitR
 
 An efficient SAT-based theorem prover for Intuitionistic Propostional Logic.
 
-It is implemented on the top of the prover `intuit` by Claessen and Rosen
-(https://github.com/koengit/intuit).
+It is implemented on the top of the prover [intuit](https://github.com/koengit/intuit)
+by Claessen and Rosen.
+
 
 An implementation of `intuit` with the trace of computations and the
 construction of derivations/countermodels is available at the
