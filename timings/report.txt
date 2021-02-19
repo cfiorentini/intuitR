@@ -1,0 +1,163 @@
+## TIMEOUT: 600 seconds
+#### EC (100) ####
+intuitR     100 (2.738) 
+intuit      100 (0.821) 
+fCube       100 (6.183) 
+intHistGC   100 (0.651) 
+#### LCL (2) ####
+intuitR     2 (0.006) 
+intuit      2 (0.005) 
+fCube       2 (0.030) 
+intHistGC   2 (0.010) 
+#### SYJ1 (12) ####
+intuitR     12 (0.033) 
+intuit      12 (0.042) 
+fCube       12 (0.181) 
+intHistGC   12 (0.066) 
+#### SYJ201 (50) ####
+intuitR     50 (2.259) 
+intuit      50 (11.494) 
+fCube       50 (259.776) 
+intHistGC   50 (39.466) 
+#### SYJ202 (10) ####
+# we have not considered the remaining 28 formulas,
+# since all the provers exceeded the timeout
+intuitR     10 (49.265) 
+intuit      10 (50.658) 
+fCube       9 (176.984) ## TIMEOUT ##
+intHistGC   6 (324.673) ## TIMEOUT ##
+#### SYJ203 (50) ####
+intuitR     50 (0.250) 
+intuit      50 (0.335) 
+fCube       50 (1.671) 
+intHistGC   50 (0.293) 
+#### SYJ204 (50) ####
+intuitR     50 (0.442) 
+intuit      50 (0.477) 
+fCube       50 (0.972) 
+intHistGC   50 (0.203) 
+#### SYJ205 (50) ####
+intuitR     50 (0.500) 
+intuit      50 (0.730) 
+fCube       50 (1.317) 
+intHistGC   50 (4.129) 
+#### SYJ206 (50) ####
+intuitR     50 (0.303) 
+intuit      50 (0.348) 
+fCube       50 (0.759) 
+intHistGC   50 (0.112) 
+#### SYJ207 (50) ####
+intuitR     50 (2.291) 
+intuit      50 (109.919) 
+fCube       50 (138.546) 
+intHistGC   50 (1014.476) 
+#### SYJ208 (38) ####
+intuitR     38 (5.225) 
+intuit      38 (5.479) 
+fCube       29 (2.755) ## TIMEOUT ##
+intHistGC   38 (497.715) 
+#### SYJ209 (50) ####
+intuitR     50 (0.226) 
+intuit      50 (0.278) 
+fCube       50 (1.690) 
+intHistGC   50 (0.254) 
+#### SYJ210 (50) ####
+intuitR     50 (0.272) 
+intuit      50 (0.252) 
+fCube       50 (0.988) 
+intHistGC   50 (0.288) 
+#### SYJ211 (50) ####
+intuitR     50 (0.462) 
+intuit      50 (1.251) 
+fCube       50 (1.073) 
+intHistGC   50 (63.686) 
+#### SYJ212 (50) ####
+intuitR     50 (0.669) 
+intuit      42 (587.794) ## TIMEOUT ##
+fCube       50 (2.698) 
+intHistGC   50 (1.624) 
+#### SYN (20) ####
+intuitR     20 (0.059) 
+intuit      20 (0.068) 
+fCube       20 (0.303) 
+intHistGC   20 (0.038) 
+#### cross (4) ####
+intuitR     4 (0.100) 
+intuit      4 (0.097) 
+fCube       4 (3.417) 
+intHistGC   2 (0.005) ## TIMEOUT ##
+#### jm_bind (3) ####
+intuitR     3 (0.031) 
+intuit      3 (0.026) 
+fCube       3 (0.360) 
+intHistGC   3 (0.014) 
+#### jm_cross (4) ####
+intuitR     4 (0.120) 
+intuit      4 (0.090) 
+fCube       4 (5.404) 
+intHistGC   3 (4.324) ## TIMEOUT ##
+#### jm_lift (3) ####
+intuitR     3 (0.170) 
+intuit      3 (0.133) 
+fCube       3 (6.847) 
+intHistGC   2 (0.028) ## TIMEOUT ##
+#### join (3) ####
+intuitR     3 (0.010) 
+intuit      3 (0.009) 
+fCube       3 (0.047) 
+intHistGC   3 (0.006) 
+#### lift (3) ####
+intuitR     3 (0.119) 
+intuit      3 (0.102) 
+fCube       3 (6.494) 
+intHistGC   2 (0.012) ## TIMEOUT ##
+#### map (7) ####
+intuitR     7 (0.214) 
+intuit      7 (0.424) 
+fCube       7 (447.207) 
+intHistGC   6 (17.406) ## TIMEOUT ##
+#### mapf (4) ####
+intuitR     4 (0.187) 
+intuit      4 (0.400) 
+fCube       4 (446.921) 
+intHistGC   3 (0.043) ## TIMEOUT ##
+#### negEC (100) ####
+intuitR     100 (3.614) 
+intuit      100 (1.116) 
+fCube       100 (13.733) 
+intHistGC   100 (5.807) 
+#### negportia (100) ####
+intuitR     100 (7.956) 
+intuit      100 (8.309) 
+fCube       98 (3826.011) ## TIMEOUT ##
+intHistGC   100 (28.289) 
+#### negportiav2 (100) ####
+intuitR     100 (8.081) 
+intuit      100 (8.411) 
+fCube       98 (1264.103) ## TIMEOUT ##
+intHistGC   100 (3212.293) 
+#### nishimura2 (28) ####
+intuitR     28 (9.784) 
+intuit      28 (12.285) 
+fCube       27 (141.326) ## TIMEOUT ##
+intHistGC   28 (7.616) 
+#### nishimura (27) ####
+intuitR     27 (4.079) 
+intuit      27 (4.030) 
+fCube       27 (20.493) 
+intHistGC   27 (0.683) 
+#### portia (100) ####
+intuitR     100 (32.878) 
+intuit      100 (22.596) 
+fCube       100 (3255.818) 
+intHistGC   100 (3200.135) 
+#### rights (4) ####
+intuitR     4 (0.134) 
+intuit      4 (0.132) 
+fCube       4 (6.439) 
+intHistGC   4 (0.404) 
+#### unsec (4) ####
+intuitR     4 (0.032) 
+intuit      4 (0.029) 
+fCube       4 (0.267) 
+intHistGC   4 (20.310) 

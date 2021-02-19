@@ -1,0 +1,60 @@
+name:                intuitR
+version:             0.1.0.0
+cabal-version:       >= 2.0
+
+
+                     
+
+synopsis:   efficient SAT-based therorem prover for Intuitionitic Propositional Logic
+-- homepage:          
+-- bug-reports:
+
+license:             BSD3
+
+-- The file containing the license text.
+license-file:        LICENSE
+
+
+author:              Camillo Fiorentini
+
+maintainer:          fiorentini@di.unimi.it
+
+category:            Theorem Prover
+
+build-type:          Simple
+
+
+extra-source-files:  CHANGELOG.md, README.md
+
+
+executable intuitR
+  main-is:             IntuitR.hs
+
+  -- Modules included in this executable, other than Main.
+  other-modules: Clausify,
+                 ParseProblem,
+                 Parsek,
+                 Prover,
+                 Types,
+                 Utility,
+                 WriteLatex,
+                 WriteMakeFile,
+                 WriteModelGraphviz
+
+
+  -- Other library packages from which modules are imported.
+  build-depends:       base >=4.9 && <5,
+                       raw-strings-qq,
+                       minisat,
+                       partial-order,
+                       containers >=0.4,
+                       directory,
+                       filepath,
+                       unix,
+                       mtl
+  -- Directories containing source files.
+  hs-source-dirs:      src
+
+  -- Base language which the package is written in.
+  default-language:    Haskell2010
+
