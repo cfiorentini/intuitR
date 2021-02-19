@@ -87,10 +87,7 @@ We have implemented different  trace levels:
 TPT Syntax
 ----------
 
-The TPT syntax is extensively described in
-
- http://tptp.cs.miami.edu/TPTP/QuickGuide/Problems.html
-
+The TPT syntax is extensively described [here](http://tptp.cs.miami.edu/TPTP/QuickGuide/Problems.html),
 see also the files .p in the directories `Benchmarks` and `test`.
 
 For small formulas F, you can write in the input file the line:
