@@ -16,16 +16,9 @@ Installation
 
 You have to install:
 
-- The Haskell Platform  https://www.haskell.org/platform/
-- The Haskell Cabal     https://www.haskell.org/cabal/
+- The [Haskell Platform](https://www.haskell.org/platform/)
+- The [Haskell Cabal](https://www.haskell.org/cabal/)
 
-
-If you already have the cabal executable, you can upgrade it by running:
-
-```console
- cabal install Cabal cabal-install
- cabal user-config update
-```
 
 From the  directory `intuitR` run the command:
 
