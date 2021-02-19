@@ -47,7 +47,8 @@ Note that  the executable `intuitR` is located inside the directory `dist-newsty
 Running
 -------
 
-The input formula must be written in a text file using the TPTP syntax (see next section).
+The input formula must be written in a text file using the
+[TPTP syntax](http://tptp.cs.miami.edu/TPTP/QuickGuide/Problems.html) (see next section).
 The formulas chi and psi used in the examples are defined in the .p files contained in
 the directory `test`.
 

@@ -12,7 +12,8 @@ The installation and usage instructions are similar to `intuitR`:
     cabal install
 ```
 
-- The input formula must be written in a text file using the TPTP syntax.
+- The input formula must be written in a text file using the
+   [TPTP syntax](http://tptp.cs.miami.edu/TPTP/QuickGuide/Problems.html).
   To prove the formula in the file `form.p`, run one of the folllwing commands:
 
 ```console
