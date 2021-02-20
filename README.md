@@ -16,13 +16,15 @@ Installation
 
 You have to install:
 
-- thehe [Haskell Platform](https://www.haskell.org/platform/);
+- the [Haskell Platform](https://www.haskell.org/platform/);
 - the [Haskell Cabal](https://www.haskell.org/cabal/).
 
 
 From the  directory `intuitR` run the command:
 
+```console
  cabal install
+```
 
 It should be printed a message like this:
 
@@ -41,17 +43,20 @@ Running
 
 The input formula must be written in a text file using the
 [TPTP syntax](http://tptp.cs.miami.edu/TPTP/QuickGuide/Problems.html) (see next section).
-The formulas $\chi$ and \psi used in the paper examples  are defined in the .p files contained in
+The formulas &chi; and &psi; used in Examples 1 and 2  are defined in the .p files contained in
 the directory `test`.
 
-To decide the validity of the formula in the file `form.p`, run the command
+To decide the validity of the formula in the file `form.p`, run the command:
 
+```console
  intuitR form.p
+```
 
 To generate the output files with the trace of the computation and the derivation or countermodel:
 
+```console
  intuitR -t form.p
-
+```
 
 A directory out-...  will be created containing  the source files (.tex and .gv).
 To compile them, move into such a directory and enter the command `make`.
@@ -64,7 +69,7 @@ Note that:
 
 Both the commands `pdflatex` and `dot` must be in your PATH variable.
 
-We have implemented different  trace levels:
+We have implemented four different  trace levels:
 
 ```console
  intuitR -t0 form.p     // minimum trace level, no output files 
@@ -81,8 +86,9 @@ see also the files .p in the directories `Benchmarks` and `test`.
 
 For small formulas F, you can write in the input file the line
 
+```console
   fof(label, conjecture, F).
-
+```
 
 where:
 
@@ -138,4 +144,7 @@ Experiments
 
 The directory `timings` contains a detailed account of the
 experiments we have performed with timeout 600 seconds on a machine 
-Intel  i7-8700 CPU, 3.20GHz, 16GB memory.
+
+```console
+Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 16GB memory.
+```
