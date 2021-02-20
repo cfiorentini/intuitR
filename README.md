@@ -16,17 +16,15 @@ Installation
 
 You have to install:
 
-- The [Haskell Platform](https://www.haskell.org/platform/)
-- The [Haskell Cabal](https://www.haskell.org/cabal/)
+- thehe [Haskell Platform](https://www.haskell.org/platform/);
+- the [Haskell Cabal](https://www.haskell.org/cabal/).
 
 
 From the  directory `intuitR` run the command:
 
- ```console
  cabal install
-```
 
-It should be printed a message like this
+It should be printed a message like this:
 
 ```console
  ....
@@ -35,7 +33,7 @@ It should be printed a message like this
 
 
 meanining that `intuitR` is the command to launch the prover.
-Note that  the executable `intuitR` is located inside the directory `dist-newstyle`.
+The executable `intuitR` is located inside the directory `dist-newstyle`.
 
 
 Running
@@ -43,20 +41,17 @@ Running
 
 The input formula must be written in a text file using the
 [TPTP syntax](http://tptp.cs.miami.edu/TPTP/QuickGuide/Problems.html) (see next section).
-The formulas chi and psi used in the examples are defined in the .p files contained in
+The formulas $\chi$ and \psi used in the paper examples  are defined in the .p files contained in
 the directory `test`.
 
 To decide the validity of the formula in the file `form.p`, run the command
 
-```console
  intuitR form.p
-```
 
 To generate the output files with the trace of the computation and the derivation or countermodel:
 
-```console
  intuitR -t form.p
-```
+
 
 A directory out-...  will be created containing  the source files (.tex and .gv).
 To compile them, move into such a directory and enter the command `make`.
@@ -84,13 +79,12 @@ TPT Syntax
 The TPT syntax is extensively described [here](http://tptp.cs.miami.edu/TPTP/QuickGuide/Problems.html),
 see also the files .p in the directories `Benchmarks` and `test`.
 
-For small formulas F, you can write in the input file the line:
+For small formulas F, you can write in the input file the line
 
-```console
   fof(label, conjecture, F).
-```
 
-where
+
+where:
 
 ```console
   F :=     atom          // prop. variable
@@ -127,8 +121,8 @@ For instance, if the timeout is 600 secs:
  analyze_data.sh 600
 ```
 
-If you haved installed `intuit`, the scripts also perform the tests with `intuit`.
-Note that  commands  `intuitR` (and `intuit`) must be in your PATH variable.
+Note that  command  `intuitR` must be in your PATH variable.
+If you have installed `intuit`, the scripts also perform the tests with `intuit`.
 
 To translate the benchmarks into fCube and IntHistGC syntax, run:
 
