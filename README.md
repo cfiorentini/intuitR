@@ -120,7 +120,7 @@ into the subdirectory `_other_benckmarks_SYJ202`).
 To run the benchmarks and analyze the results, from the directory
 `script` run the commands `run_benchmarks.sh` and `analyze_data.sh`;
 both commands need as parameter the timeout to be used (in seconds).
-For instance, if the timeout is 600 secs:
+For instance, if the timeout is 600 secs run:
 
 ```console
  run_benchmarks.sh 600
@@ -128,9 +128,12 @@ For instance, if the timeout is 600 secs:
 ```
 
 Note that  command  `intuitR` must be in your PATH variable.
-If you have installed `intuit`, the scripts also perform the tests with `intuit`.
+If you have installed [intuit](https://github.com/koengit/intuit),
+the script also performs the tests with `intuit`.
 
-To translate the benchmarks into fCube and IntHistGC syntax, run:
+To translate the benchmarks into
+[fCube](http://www2.disco.unimib.it/fiorino/fcube.html) and
+[IntHistGChttps](https://github.com/jessezwu/IntHistGC) syntax, run:
 
 ```console
  generate_fCube_benchmarks.sh
@@ -146,5 +149,5 @@ The directory `timings` contains a detailed account of the
 experiments we have performed with timeout 600 seconds on a machine 
 
 ```console
-Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 16GB memory.
+Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 16GB memory
 ```
