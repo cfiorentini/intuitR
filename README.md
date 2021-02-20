@@ -133,7 +133,7 @@ the script also performs the tests with `intuit`.
 
 To translate the benchmarks into
 [fCube](http://www2.disco.unimib.it/fiorino/fcube.html) and
-[IntHistGChttps](https://github.com/jessezwu/IntHistGC) syntax, run:
+[IntHistGC](https://github.com/jessezwu/IntHistGC) syntax, run:
 
 ```console
  generate_fCube_benchmarks.sh
