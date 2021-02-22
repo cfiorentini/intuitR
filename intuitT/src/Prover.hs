@@ -133,9 +133,9 @@ proveProblem traceLev file cs ics goal  =
        texDerFile = combine dirName (addExtension derName ".tex")
        gvFile =  combine dirName (addExtension modelName ".gv")
        makeFile = combine dirName  "Makefile"
-       msgMake = concatN 60 "*" ++
-                 "\n---> Output files are in the directory " ++    dirName  ++
-                 "\n---> Move into directory " ++ dirName ++ " and run command 'make' to compile them" 
+       msgMake = concatN 80 "*" ++
+                 "\n---> Output files are in the directory '" ++    dirName  ++ "'" ++
+                 "\n---> Move into directory '" ++ dirName ++ "' and run command 'make' to compile them" 
   case res of
        Proved (_,der)  ->  -- valid
          do

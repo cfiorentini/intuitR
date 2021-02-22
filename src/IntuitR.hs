@@ -109,7 +109,7 @@ processTrace traceLev file inputForms =
      end2 <- getCPUTime
      let time_clausify =(fromIntegral (end1 - start1)) / (10^12)
          time_prover =  (fromIntegral (end2 - start2)) / (10^12)
-     putStrLn $  concatN 60 "*"  
+     putStrLn $  concatN 80 "*"  
      printf "Clausification time: %0.3f sec\n" (time_clausify :: Double)
      printf "Prover time: %0.3f sec\n" (time_prover :: Double)
    
