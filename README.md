@@ -63,11 +63,19 @@ To compile them, move into such a directory and enter the command `make`.
 
 Note that:
 
--  files .tex  are compiled using  `pdflatex`
+-  files .tex  are compiled using  `pdflatex`; derivations are built using the Latex package [proof](http://research.nii.ac.jp/~tatsuta/proof-sty.html).
+
 -  files .gv   are compiled using the command `dot` of
    [Graphviz - Graph Visualization Software](https://graphviz.org/).
 
 Both the commands `pdflatex` and `dot` must be in your PATH variable.
+If something goes wrong, try to execute the commands:
+
+```console
+pdflatex your_file.tex
+dot uour_file.gv -Tpng -o out.png
+```
+
 
 We have implemented four different  trace levels:
 
@@ -117,14 +125,14 @@ The directory `Benchmarks` contains the files corresponding to the 1200 problems
 (actually, the 28 problems not solved by `intuitR` and `intuit` within 600secs have been moved
 into the subdirectory `_other_benckmarks_SYJ202`).
 
-To run the benchmarks and analyze the results, from the directory
-`script` run the commands `run_benchmarks.sh` and `analyze_data.sh`;
+To run the benchmarks and get e report, from the directory
+`script` run the commands `run_benchmarks.sh` and `build_report.sh`;
 both commands need as parameter the timeout to be used (in seconds).
 For instance, if the timeout is 600 secs run:
 
 ```console
  run_benchmarks.sh 600
- analyze_data.sh 600
+ build_report.sh 600
 ```
 
 Note that  command  `intuitR` must be in your PATH variable.

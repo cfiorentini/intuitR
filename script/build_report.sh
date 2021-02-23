@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# Analyze the results of the output files of run_bench 
-# Usage: analyze_data.sh n
+# Build a report using the files produced by run_bench 
+# Usage: build_report.sh n
 #
-#
+# n: timeout (in seconds)
 
 
 # grep "^pref" file.txt:  match string having pref as prefix
