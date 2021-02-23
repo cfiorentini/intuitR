@@ -56,7 +56,8 @@ fi
 # check if intuit is defined
 if   ! command -v $INTUIT  &> /dev/null
 then
-    echo "$INTUIT: command not found"
+    echo "** $INTUIT: command not found"
+    echo "** To run the experiments with intuit, you have to install it"
     exit 
 fi    
 

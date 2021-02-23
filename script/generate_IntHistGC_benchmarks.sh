@@ -4,7 +4,7 @@
 INTUIT_REST=intuitR    # command to launch intuitR  
 
 BENCHMARKS_DIR=../Benchmarks # intuitR/intuit benchmarks
-INTHISTGC_DIR=intHistGC      #dir. for IntHistGC Benchmarks 
+INTHISTGC_DIR=Benchmarks_intHistGC      #dir. for IntHistGC Benchmarks 
 
 # check if intuitR is defined
 if   ! command -v $INTUIT_REST  &> /dev/null
@@ -27,3 +27,4 @@ do
     $INTUIT_REST -IntHistGC "$file"  > "$outFile"
 done
     
+echo "Created directory INTHISTGC_DIR"
