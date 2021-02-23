@@ -73,7 +73,7 @@ If something goes wrong, try to execute the commands:
 
 ```console
 pdflatex your_file.tex
-dot uour_file.gv -Tpng -o out.png
+dot your_file.gv -Tpng -o out.png
 ```
 
 
