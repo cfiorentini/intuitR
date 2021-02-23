@@ -20,7 +20,7 @@ You have to install:
 - the [Haskell Cabal](https://www.haskell.org/cabal/).
 
 
-From the  directory `intuitR` run the command:
+From the  root directory (i.e., the directory containing the file  `intuitR.cabal`) run the command:
 
 ```console
  cabal install

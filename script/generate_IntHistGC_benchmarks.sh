@@ -27,4 +27,4 @@ do
     $INTUIT_REST -IntHistGC "$file"  > "$outFile"
 done
     
-echo "Created directory INTHISTGC_DIR"
+echo "Created directory $INTHISTGC_DIR"
