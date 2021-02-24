@@ -1,0 +1,290 @@
++++ Reading file '"chi.p"'...
++++ Clausification...
++++ Created 17 flat clauses and 6 implication clauses
+==== FLAT CLAUSES (17) ====
+$p1, $p2 -> $p0
+$p3 -> p2
+$p3 -> p3
+$p4 -> p1
+$p4 -> $p3
+$p0 -> $p4
+$p6, $p7 -> $p5
+$p5 -> $p4
+$p9, $p10 -> $p8
+$p8 -> $p4
+p1, p2, p3 -> $goal
+p2 -> $p7
+p1 -> $p9
+p3 -> $p6
+p1 -> $p2
+p3 -> $p10
+p2 -> $p1
+==== IMPLICATION CLAUSES (6) ====
+(p3 -> p2) -> $p7
+(p3 -> p1) -> $p9
+(p2 -> p3) -> $p6
+(p2 -> p1) -> $p2
+(p1 -> p3) -> $p10
+(p1 -> p2) -> $p1
++++ Proving (intuitT)
+######## PROVE[0] ########
+SOLVER: R0
+IMPLICATIONS(6):
+I0 = (p3 -> p2) -> $p7
+I1 = (p3 -> p1) -> $p9
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: 
+RIGHT ATM: $goal
+-----------------------------------------
+[0] @SAT: R0 |-- $goal ?
+>>> NO( {} )
+[0] Model found (new world): M0 = {}
+[0] ics to Check:
+I0 = (p3 -> p2) -> $p7
+I1 = (p3 -> p1) -> $p9
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+[0] LOOP: check I0 = (p3 -> p2) -> $p7
+######## PROVE[1] ########
+SOLVER: R0
+IMPLICATIONS(5):
+I1 = (p3 -> p1) -> $p9
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: p3
+RIGHT ATM: p2
+-----------------------------------------
+[1] @SAT: R0, p3 |-- p2 ?
+>>> NO( {$p10, $p6, p3} )
+[1] Model found (new world): M1 = {$p10, $p6, p3}
+[1] ics to Check:
+I3 = (p2 -> p1) -> $p2
+I5 = (p1 -> p2) -> $p1
+[1] LOOP: check I3 = (p2 -> p1) -> $p2
+######## PROVE[2] ########
+SOLVER: R0
+IMPLICATIONS(4):
+I1 = (p3 -> p1) -> $p9
+I2 = (p2 -> p3) -> $p6
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: p2, $p10, $p6, p3
+RIGHT ATM: p1
+-----------------------------------------
+[2] @SAT: R0, p2, $p10, $p6, p3 |-- p1 ?
+>>> YES( {$p6, p2} )
+[2] R0, $p6, p2 |-- p1
+######## END[2] (derivation) ########
+[1][I3 = (p2 -> p1) -> $p2] proved left premise of rule ljt
+[1][I3 = (p2 -> p1) -> $p2] new clause: $p6 -> $p2
+[1][I3 = (p2 -> p1) -> $p2] R1 = R0, $p6 -> $p2
+[1][I3 = (p2 -> p1) -> $p2] prove right premise of rule ljt
+######## PROVE[3] ########
+SOLVER: R1
+IMPLICATIONS(5):
+I1 = (p3 -> p1) -> $p9
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: p3
+RIGHT ATM: p2
+-----------------------------------------
+[3] @SAT: R1, p3 |-- p2 ?
+>>> NO( {$p10, $p2, $p6, p3} )
+[3] Model found (new world): M2 = {$p10, $p2, $p6, p3}
+[3] ics to Check:
+I5 = (p1 -> p2) -> $p1
+[3] LOOP: check I5 = (p1 -> p2) -> $p1
+######## PROVE[4] ########
+SOLVER: R1
+IMPLICATIONS(4):
+I1 = (p3 -> p1) -> $p9
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+ASSUMPTIONS: p1, $p10, $p2, $p6, p3
+RIGHT ATM: p2
+-----------------------------------------
+[4] @SAT: R1, p1, $p10, $p2, $p6, p3 |-- p2 ?
+>>> YES( {$p10, p1} )
+[4] R1, $p10, p1 |-- p2
+######## END[4] (derivation) ########
+[3][I5 = (p1 -> p2) -> $p1] proved left premise of rule ljt
+[3][I5 = (p1 -> p2) -> $p1] new clause: $p10 -> $p1
+[3][I5 = (p1 -> p2) -> $p1] R2 = R1, $p10 -> $p1
+[3][I5 = (p1 -> p2) -> $p1] prove right premise of rule ljt
+######## PROVE[5] ########
+SOLVER: R2
+IMPLICATIONS(5):
+I1 = (p3 -> p1) -> $p9
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: p3
+RIGHT ATM: p2
+-----------------------------------------
+[5] @SAT: R2, p3 |-- p2 ?
+>>> YES( {p3} )
+[5] R2, p3 |-- p2
+######## END[5] (derivation) ########
+######## END[3][I5 = (p1 -> p2) -> $p1] (derivation) ########
+######## END[1][I3 = (p2 -> p1) -> $p2] (derivation) ########
+[0][I0 = (p3 -> p2) -> $p7] proved left premise of rule ljt
+[0][I0 = (p3 -> p2) -> $p7] new clause: $p7
+[0][I0 = (p3 -> p2) -> $p7] R3 = R2, $p7
+[0][I0 = (p3 -> p2) -> $p7] prove right premise of rule ljt
+######## PROVE[6] ########
+SOLVER: R3
+IMPLICATIONS(6):
+I0 = (p3 -> p2) -> $p7
+I1 = (p3 -> p1) -> $p9
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: 
+RIGHT ATM: $goal
+-----------------------------------------
+[6] @SAT: R3 |-- $goal ?
+>>> NO( {$p1, $p10, $p7} )
+[6] Model found (new world): M3 = {$p1, $p10, $p7}
+[6] ics to Check:
+I1 = (p3 -> p1) -> $p9
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+[6] LOOP: check I1 = (p3 -> p1) -> $p9
+######## PROVE[7] ########
+SOLVER: R3
+IMPLICATIONS(5):
+I0 = (p3 -> p2) -> $p7
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: p3, $p1, $p10, $p7
+RIGHT ATM: p1
+-----------------------------------------
+[7] @SAT: R3, p3, $p1, $p10, $p7 |-- p1 ?
+>>> YES( {p3} )
+[7] R3, p3 |-- p1
+######## END[7] (derivation) ########
+[6][I1 = (p3 -> p1) -> $p9] proved left premise of rule ljt
+[6][I1 = (p3 -> p1) -> $p9] new clause: $p9
+[6][I1 = (p3 -> p1) -> $p9] R4 = R3, $p9
+[6][I1 = (p3 -> p1) -> $p9] prove right premise of rule ljt
+######## PROVE[8] ########
+SOLVER: R4
+IMPLICATIONS(6):
+I0 = (p3 -> p2) -> $p7
+I1 = (p3 -> p1) -> $p9
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: 
+RIGHT ATM: $goal
+-----------------------------------------
+[8] @SAT: R4 |-- $goal ?
+>>> NO( {$p1, $p7, $p9} )
+[8] Model found (new world): M4 = {$p1, $p7, $p9}
+[8] ics to Check:
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+[8] LOOP: check I2 = (p2 -> p3) -> $p6
+######## PROVE[9] ########
+SOLVER: R4
+IMPLICATIONS(5):
+I0 = (p3 -> p2) -> $p7
+I1 = (p3 -> p1) -> $p9
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: p2, $p1, $p7, $p9
+RIGHT ATM: p3
+-----------------------------------------
+[9] @SAT: R4, p2, $p1, $p7, $p9 |-- p3 ?
+>>> NO( {$p1, $p7, $p9, p2} )
+[9] Model found (new world): M5 = {$p1, $p7, $p9, p2}
+[9] ics to Check:
+I4 = (p1 -> p3) -> $p10
+[9] LOOP: check I4 = (p1 -> p3) -> $p10
+######## PROVE[10] ########
+SOLVER: R4
+IMPLICATIONS(4):
+I0 = (p3 -> p2) -> $p7
+I1 = (p3 -> p1) -> $p9
+I3 = (p2 -> p1) -> $p2
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: p1, $p1, $p7, $p9, p2
+RIGHT ATM: p3
+-----------------------------------------
+[10] @SAT: R4, p1, $p1, $p7, $p9, p2 |-- p3 ?
+>>> YES( {$p1, p1} )
+[10] R4, $p1, p1 |-- p3
+######## END[10] (derivation) ########
+[9][I4 = (p1 -> p3) -> $p10] proved left premise of rule ljt
+[9][I4 = (p1 -> p3) -> $p10] new clause: $p1 -> $p10
+[9][I4 = (p1 -> p3) -> $p10] R5 = R4, $p1 -> $p10
+[9][I4 = (p1 -> p3) -> $p10] prove right premise of rule ljt
+######## PROVE[11] ########
+SOLVER: R5
+IMPLICATIONS(5):
+I0 = (p3 -> p2) -> $p7
+I1 = (p3 -> p1) -> $p9
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: p2, $p1, $p7, $p9
+RIGHT ATM: p3
+-----------------------------------------
+[11] @SAT: R5, p2, $p1, $p7, $p9 |-- p3 ?
+>>> YES( {p2} )
+[11] R5, p2 |-- p3
+######## END[11] (derivation) ########
+######## END[9][I4 = (p1 -> p3) -> $p10] (derivation) ########
+[8][I2 = (p2 -> p3) -> $p6] proved left premise of rule ljt
+[8][I2 = (p2 -> p3) -> $p6] new clause: $p6
+[8][I2 = (p2 -> p3) -> $p6] R6 = R5, $p6
+[8][I2 = (p2 -> p3) -> $p6] prove right premise of rule ljt
+######## PROVE[12] ########
+SOLVER: R6
+IMPLICATIONS(6):
+I0 = (p3 -> p2) -> $p7
+I1 = (p3 -> p1) -> $p9
+I2 = (p2 -> p3) -> $p6
+I3 = (p2 -> p1) -> $p2
+I4 = (p1 -> p3) -> $p10
+I5 = (p1 -> p2) -> $p1
+ASSUMPTIONS: 
+RIGHT ATM: $goal
+-----------------------------------------
+[12] @SAT: R6 |-- $goal ?
+>>> YES( {} )
+[12] R6 |-- $goal
+######## END[12] (derivation) ########
+######## END[8][I2 = (p2 -> p3) -> $p6] (derivation) ########
+######## END[6][I1 = (p3 -> p1) -> $p9] (derivation) ########
+######## END[0][I0 = (p3 -> p2) -> $p7] (derivation) ########
++++ RESULT: Valid (intuitionistically)
+Flat  clauses: 17
+Impl. clauses: 6
+Atoms: 16
+Calls to the SAT-solver: 13
+Added clauses (= Yes answers): 6
+Generated worlds (= No answers): 6
+********************************************************************************
+---> Output files are in the directory 'out-chi'
+---> Move into directory 'out-chi' and run command 'make' to compile them
+********************************************************************************
+Clausification time: 0.000 sec
+Prover time: 0.002 sec

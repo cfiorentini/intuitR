@@ -1,0 +1,782 @@
++++ Reading file '"psi.p"'...
++++ Clausification...
++++ Created 24 flat clauses and 9 implication clauses
+==== FLAT CLAUSES (24) ====
+$p1, $p2 -> $p0
+$p3 -> p3
+$p3 -> p4
+$p4 -> p2
+$p4 -> $p3
+$p5 -> p1
+$p5 -> $p4
+$p0 -> $p5
+$p7, $p8 -> $p6
+$p6 -> $p5
+$p10, $p11 -> $p9
+$p9 -> $p5
+$p13, $p14 -> $p12
+$p12 -> $p5
+p0 -> $goal
+p1, p2, p3, p4 -> $goal
+p3 -> $p11
+p1 -> $p13
+p4 -> $p10
+p2 -> $p8
+p3 -> $p7
+p1 -> $p2
+p4 -> $p14
+p2 -> $p1
+==== IMPLICATION CLAUSES (9) ====
+(p4 -> p3) -> $p11
+(p4 -> p1) -> $p13
+(p3 -> p4) -> $p10
+(p3 -> p2) -> $p8
+(p2 -> p3) -> $p7
+(p2 -> p1) -> $p2
+(p1 -> p4) -> $p14
+(p1 -> p2) -> $p1
+(p0 -> $false) -> $goal
++++ Proving (intuitT)
+######## PROVE[0] ########
+SOLVER: R0
+IMPLICATIONS(9):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: 
+RIGHT ATM: $goal
+-----------------------------------------
+[0] @SAT: R0 |-- $goal ?
+>>> NO( {} )
+[0] Model found (new world): M0 = {}
+[0] ics to Check:
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+[0] LOOP: check I0 = (p4 -> p3) -> $p11
+######## PROVE[1] ########
+SOLVER: R0
+IMPLICATIONS(8):
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p4
+RIGHT ATM: p3
+-----------------------------------------
+[1] @SAT: R0, p4 |-- p3 ?
+>>> NO( {$p10, $p14, p4} )
+[1] Model found (new world): M1 = {$p10, $p14, p4}
+[1] ics to Check:
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+[1] LOOP: check I3 = (p3 -> p2) -> $p8
+######## PROVE[2] ########
+SOLVER: R0
+IMPLICATIONS(7):
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p3, $p10, $p14, p4
+RIGHT ATM: p2
+-----------------------------------------
+[2] @SAT: R0, p3, $p10, $p14, p4 |-- p2 ?
+>>> YES( {$p10, p3} )
+[2] R0, $p10, p3 |-- p2
+######## END[2] (derivation) ########
+[1][I3 = (p3 -> p2) -> $p8] proved left premise of rule ljt
+[1][I3 = (p3 -> p2) -> $p8] new clause: $p10 -> $p8
+[1][I3 = (p3 -> p2) -> $p8] R1 = R0, $p10 -> $p8
+[1][I3 = (p3 -> p2) -> $p8] prove right premise of rule ljt
+######## PROVE[3] ########
+SOLVER: R1
+IMPLICATIONS(8):
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p4
+RIGHT ATM: p3
+-----------------------------------------
+[3] @SAT: R1, p4 |-- p3 ?
+>>> NO( {$p10, $p14, $p8, p4} )
+[3] Model found (new world): M2 = {$p10, $p14, $p8, p4}
+[3] ics to Check:
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+[3] LOOP: check I4 = (p2 -> p3) -> $p7
+######## PROVE[4] ########
+SOLVER: R1
+IMPLICATIONS(7):
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p2, $p10, $p14, $p8, p4
+RIGHT ATM: p3
+-----------------------------------------
+[4] @SAT: R1, p2, $p10, $p14, $p8, p4 |-- p3 ?
+>>> NO( {$p1, $p10, $p14, $p8, p2, p4} )
+[4] Model found (new world): M3 = {$p1, $p10, $p14, $p8, p2, p4}
+[4] ics to Check:
+I8 = (p0 -> $false) -> $goal
+[4] LOOP: check I8 = (p0 -> $false) -> $goal
+######## PROVE[5] ########
+SOLVER: R1
+IMPLICATIONS(6):
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+ASSUMPTIONS: p0, $p1, $p10, $p14, $p8, p2, p4
+RIGHT ATM: $false
+-----------------------------------------
+[5] @SAT: R1, p0, $p1, $p10, $p14, $p8, p2, p4 |-- $false ?
+>>> NO( {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} )
+[5] Model found (new world): M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4}
+[5] ics to Check:
+
+######## END [5] (model) ########
+<< M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+######## END [4] (model) ########
+<< M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+[3] LOOP: check I5 = (p2 -> p1) -> $p2
+######## PROVE[6] ########
+SOLVER: R1
+IMPLICATIONS(7):
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p2, $p10, $p14, $p8, p4
+RIGHT ATM: p1
+-----------------------------------------
+[6] @SAT: R1, p2, $p10, $p14, $p8, p4 |-- p1 ?
+>>> NO( {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} )
+[6] Model found (new world): M5 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4}
+[6] ics to Check:
+
+######## END [6] (model) ########
+<< M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+[3] LOOP: check I7 = (p1 -> p2) -> $p1
+######## PROVE[7] ########
+SOLVER: R1
+IMPLICATIONS(7):
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p1, $p10, $p14, $p8, p4
+RIGHT ATM: p2
+-----------------------------------------
+[7] @SAT: R1, p1, $p10, $p14, $p8, p4 |-- p2 ?
+>>> YES( {$p14, p1} )
+[7] R1, $p14, p1 |-- p2
+######## END[7] (derivation) ########
+[3][I7 = (p1 -> p2) -> $p1] proved left premise of rule ljt
+[3][I7 = (p1 -> p2) -> $p1] new clause: $p14 -> $p1
+[3][I7 = (p1 -> p2) -> $p1] R2 = R1, $p14 -> $p1
+[3][I7 = (p1 -> p2) -> $p1] prove right premise of rule ljt
+######## PROVE[8] ########
+SOLVER: R2
+IMPLICATIONS(8):
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p4
+RIGHT ATM: p3
+-----------------------------------------
+[8] @SAT: R2, p4 |-- p3 ?
+>>> NO( {$goal, $p1, $p10, $p14, $p8, p0, p4} )
+[8] Model found (new world): M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4}
+[8] ics to Check:
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+[8] LOOP: check I4 = (p2 -> p3) -> $p7
+######## PROVE[9] ########
+SOLVER: R2
+IMPLICATIONS(7):
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p2, $goal, $p1, $p10, $p14, $p8, p0, p4
+RIGHT ATM: p3
+-----------------------------------------
+[9] @SAT: R2, p2, $goal, $p1, $p10, $p14, $p8, p0, p4 |-- p3 ?
+>>> NO( {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} )
+[9] Model found (new world): M7 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4}
+[9] ics to Check:
+
+######## END [9] (model) ########
+<< M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+[8] LOOP: check I5 = (p2 -> p1) -> $p2
+######## PROVE[10] ########
+SOLVER: R2
+IMPLICATIONS(7):
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p2, $goal, $p1, $p10, $p14, $p8, p0, p4
+RIGHT ATM: p1
+-----------------------------------------
+[10] @SAT: R2, p2, $goal, $p1, $p10, $p14, $p8, p0, p4 |-- p1 ?
+>>> NO( {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} )
+[10] Model found (new world): M8 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4}
+[10] ics to Check:
+
+######## END [10] (model) ########
+<< M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+######## END [8] (model) ########
+<< M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+######## END[3][I7 = (p1 -> p2) -> $p1] (model) ########
+######## END[1][I3 = (p3 -> p2) -> $p8] (model) ########
+[0] LOOP: check I1 = (p4 -> p1) -> $p13
+######## PROVE[11] ########
+SOLVER: R2
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p4
+RIGHT ATM: p1
+-----------------------------------------
+[11] @SAT: R2, p4 |-- p1 ?
+>>> NO( {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} )
+[11] Model found (new world): M9 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4}
+[11] ics to Check:
+
+######## END [11] (model) ########
+<< M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+[0] LOOP: check I2 = (p3 -> p4) -> $p10
+######## PROVE[12] ########
+SOLVER: R2
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p3
+RIGHT ATM: p4
+-----------------------------------------
+[12] @SAT: R2, p3 |-- p4 ?
+>>> NO( {$goal, $p1, $p11, $p14, $p7, p0, p3} )
+[12] Model found (new world): M10 = {$goal, $p1, $p11, $p14, $p7, p0, p3}
+[12] ics to Check:
+I1 = (p4 -> p1) -> $p13
+I5 = (p2 -> p1) -> $p2
+[12] LOOP: check I1 = (p4 -> p1) -> $p13
+######## PROVE[13] ########
+SOLVER: R2
+IMPLICATIONS(7):
+I0 = (p4 -> p3) -> $p11
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p4, $goal, $p1, $p11, $p14, $p7, p0, p3
+RIGHT ATM: p1
+-----------------------------------------
+[13] @SAT: R2, p4, $goal, $p1, $p11, $p14, $p7, p0, p3 |-- p1 ?
+>>> YES( {$p11, p4} )
+[13] R2, $p11, p4 |-- p1
+######## END[13] (derivation) ########
+[12][I1 = (p4 -> p1) -> $p13] proved left premise of rule ljt
+[12][I1 = (p4 -> p1) -> $p13] new clause: $p11 -> $p13
+[12][I1 = (p4 -> p1) -> $p13] R3 = R2, $p11 -> $p13
+[12][I1 = (p4 -> p1) -> $p13] prove right premise of rule ljt
+######## PROVE[14] ########
+SOLVER: R3
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p3
+RIGHT ATM: p4
+-----------------------------------------
+[14] @SAT: R3, p3 |-- p4 ?
+>>> NO( {$goal, $p1, $p11, $p13, $p7, p0, p3} )
+[14] Model found (new world): M11 = {$goal, $p1, $p11, $p13, $p7, p0, p3}
+[14] ics to Check:
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+[14] LOOP: check I5 = (p2 -> p1) -> $p2
+######## PROVE[15] ########
+SOLVER: R3
+IMPLICATIONS(7):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p2, $goal, $p1, $p11, $p13, $p7, p0, p3
+RIGHT ATM: p1
+-----------------------------------------
+[15] @SAT: R3, p2, $goal, $p1, $p11, $p13, $p7, p0, p3 |-- p1 ?
+>>> YES( {$p7, p2} )
+[15] R3, $p7, p2 |-- p1
+######## END[15] (derivation) ########
+[14][I5 = (p2 -> p1) -> $p2] proved left premise of rule ljt
+[14][I5 = (p2 -> p1) -> $p2] new clause: $p7 -> $p2
+[14][I5 = (p2 -> p1) -> $p2] R4 = R3, $p7 -> $p2
+[14][I5 = (p2 -> p1) -> $p2] prove right premise of rule ljt
+######## PROVE[16] ########
+SOLVER: R4
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p3
+RIGHT ATM: p4
+-----------------------------------------
+[16] @SAT: R4, p3 |-- p4 ?
+>>> NO( {$goal, $p11, $p13, $p2, $p7, p0, p3} )
+[16] Model found (new world): M12 = {$goal, $p11, $p13, $p2, $p7, p0, p3}
+[16] ics to Check:
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+[16] LOOP: check I6 = (p1 -> p4) -> $p14
+######## PROVE[17] ########
+SOLVER: R4
+IMPLICATIONS(7):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p1, $goal, $p11, $p13, $p2, $p7, p0, p3
+RIGHT ATM: p4
+-----------------------------------------
+[17] @SAT: R4, p1, $goal, $p11, $p13, $p2, $p7, p0, p3 |-- p4 ?
+>>> NO( {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} )
+[17] Model found (new world): M13 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3}
+[17] ics to Check:
+
+######## END [17] (model) ########
+<< M13 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} ;
+   M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+[16] LOOP: check I7 = (p1 -> p2) -> $p1
+######## PROVE[18] ########
+SOLVER: R4
+IMPLICATIONS(7):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p1, $goal, $p11, $p13, $p2, $p7, p0, p3
+RIGHT ATM: p2
+-----------------------------------------
+[18] @SAT: R4, p1, $goal, $p11, $p13, $p2, $p7, p0, p3 |-- p2 ?
+>>> NO( {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} )
+[18] Model found (new world): M14 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3}
+[18] ics to Check:
+
+######## END [18] (model) ########
+<< M13 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} ;
+   M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+######## END [16] (model) ########
+<< M12 = {$goal, $p11, $p13, $p2, $p7, p0, p3} ;
+   M13 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} ;
+   M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+######## END[14][I5 = (p2 -> p1) -> $p2] (model) ########
+######## END[12][I1 = (p4 -> p1) -> $p13] (model) ########
+[0] LOOP: check I3 = (p3 -> p2) -> $p8
+######## PROVE[19] ########
+SOLVER: R4
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p3
+RIGHT ATM: p2
+-----------------------------------------
+[19] @SAT: R4, p3 |-- p2 ?
+>>> NO( {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} )
+[19] Model found (new world): M15 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3}
+[19] ics to Check:
+
+######## END [19] (model) ########
+<< M12 = {$goal, $p11, $p13, $p2, $p7, p0, p3} ;
+   M13 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} ;
+   M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+[0] LOOP: check I4 = (p2 -> p3) -> $p7
+######## PROVE[20] ########
+SOLVER: R4
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p2
+RIGHT ATM: p3
+-----------------------------------------
+[20] @SAT: R4, p2 |-- p3 ?
+>>> NO( {$goal, $p1, $p11, $p13, $p8, p0, p2} )
+[20] Model found (new world): M16 = {$goal, $p1, $p11, $p13, $p8, p0, p2}
+[20] ics to Check:
+I2 = (p3 -> p4) -> $p10
+I6 = (p1 -> p4) -> $p14
+[20] LOOP: check I2 = (p3 -> p4) -> $p10
+######## PROVE[21] ########
+SOLVER: R4
+IMPLICATIONS(7):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I3 = (p3 -> p2) -> $p8
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p3, $goal, $p1, $p11, $p13, $p8, p0, p2
+RIGHT ATM: p4
+-----------------------------------------
+[21] @SAT: R4, p3, $goal, $p1, $p11, $p13, $p8, p0, p2 |-- p4 ?
+>>> YES( {$p1, p3} )
+[21] R4, $p1, p3 |-- p4
+######## END[21] (derivation) ########
+[20][I2 = (p3 -> p4) -> $p10] proved left premise of rule ljt
+[20][I2 = (p3 -> p4) -> $p10] new clause: $p1 -> $p10
+[20][I2 = (p3 -> p4) -> $p10] R5 = R4, $p1 -> $p10
+[20][I2 = (p3 -> p4) -> $p10] prove right premise of rule ljt
+######## PROVE[22] ########
+SOLVER: R5
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p2
+RIGHT ATM: p3
+-----------------------------------------
+[22] @SAT: R5, p2 |-- p3 ?
+>>> NO( {$goal, $p1, $p10, $p13, $p8, p0, p2} )
+[22] Model found (new world): M17 = {$goal, $p1, $p10, $p13, $p8, p0, p2}
+[22] ics to Check:
+I0 = (p4 -> p3) -> $p11
+I6 = (p1 -> p4) -> $p14
+[22] LOOP: check I0 = (p4 -> p3) -> $p11
+######## PROVE[23] ########
+SOLVER: R5
+IMPLICATIONS(7):
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p4, $goal, $p1, $p10, $p13, $p8, p0, p2
+RIGHT ATM: p3
+-----------------------------------------
+[23] @SAT: R5, p4, $goal, $p1, $p10, $p13, $p8, p0, p2 |-- p3 ?
+>>> YES( {$p13, p4} )
+[23] R5, $p13, p4 |-- p3
+######## END[23] (derivation) ########
+[22][I0 = (p4 -> p3) -> $p11] proved left premise of rule ljt
+[22][I0 = (p4 -> p3) -> $p11] new clause: $p13 -> $p11
+[22][I0 = (p4 -> p3) -> $p11] R6 = R5, $p13 -> $p11
+[22][I0 = (p4 -> p3) -> $p11] prove right premise of rule ljt
+######## PROVE[24] ########
+SOLVER: R6
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p2
+RIGHT ATM: p3
+-----------------------------------------
+[24] @SAT: R6, p2 |-- p3 ?
+>>> NO( {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} )
+[24] Model found (new world): M18 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4}
+[24] ics to Check:
+
+######## END [24] (model) ########
+<< M12 = {$goal, $p11, $p13, $p2, $p7, p0, p3} ;
+   M13 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} ;
+   M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+######## END[22][I0 = (p4 -> p3) -> $p11] (model) ########
+######## END[20][I2 = (p3 -> p4) -> $p10] (model) ########
+[0] LOOP: check I5 = (p2 -> p1) -> $p2
+######## PROVE[25] ########
+SOLVER: R6
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p2
+RIGHT ATM: p1
+-----------------------------------------
+[25] @SAT: R6, p2 |-- p1 ?
+>>> NO( {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} )
+[25] Model found (new world): M19 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4}
+[25] ics to Check:
+
+######## END [25] (model) ########
+<< M12 = {$goal, $p11, $p13, $p2, $p7, p0, p3} ;
+   M13 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} ;
+   M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+[0] LOOP: check I6 = (p1 -> p4) -> $p14
+######## PROVE[26] ########
+SOLVER: R6
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p1
+RIGHT ATM: p4
+-----------------------------------------
+[26] @SAT: R6, p1 |-- p4 ?
+>>> NO( {$goal, $p11, $p13, $p2, $p8, p0, p1} )
+[26] Model found (new world): M20 = {$goal, $p11, $p13, $p2, $p8, p0, p1}
+[26] ics to Check:
+I2 = (p3 -> p4) -> $p10
+I4 = (p2 -> p3) -> $p7
+[26] LOOP: check I2 = (p3 -> p4) -> $p10
+######## PROVE[27] ########
+SOLVER: R6
+IMPLICATIONS(7):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p3, $goal, $p11, $p13, $p2, $p8, p0, p1
+RIGHT ATM: p4
+-----------------------------------------
+[27] @SAT: R6, p3, $goal, $p11, $p13, $p2, $p8, p0, p1 |-- p4 ?
+>>> YES( {$p8, p3} )
+[27] R6, $p8, p3 |-- p4
+######## END[27] (derivation) ########
+[26][I2 = (p3 -> p4) -> $p10] proved left premise of rule ljt
+[26][I2 = (p3 -> p4) -> $p10] new clause: $p8 -> $p10
+[26][I2 = (p3 -> p4) -> $p10] R7 = R6, $p8 -> $p10
+[26][I2 = (p3 -> p4) -> $p10] prove right premise of rule ljt
+######## PROVE[28] ########
+SOLVER: R7
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I7 = (p1 -> p2) -> $p1
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p1
+RIGHT ATM: p4
+-----------------------------------------
+[28] @SAT: R7, p1 |-- p4 ?
+>>> NO( {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} )
+[28] Model found (new world): M21 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3}
+[28] ics to Check:
+
+######## END [28] (model) ########
+<< M12 = {$goal, $p11, $p13, $p2, $p7, p0, p3} ;
+   M13 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} ;
+   M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+######## END[26][I2 = (p3 -> p4) -> $p10] (model) ########
+[0] LOOP: check I7 = (p1 -> p2) -> $p1
+######## PROVE[29] ########
+SOLVER: R7
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I8 = (p0 -> $false) -> $goal
+ASSUMPTIONS: p1
+RIGHT ATM: p2
+-----------------------------------------
+[29] @SAT: R7, p1 |-- p2 ?
+>>> NO( {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} )
+[29] Model found (new world): M22 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3}
+[29] ics to Check:
+
+######## END [29] (model) ########
+<< M12 = {$goal, $p11, $p13, $p2, $p7, p0, p3} ;
+   M13 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} ;
+   M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+[0] LOOP: check I8 = (p0 -> $false) -> $goal
+######## PROVE[30] ########
+SOLVER: R7
+IMPLICATIONS(8):
+I0 = (p4 -> p3) -> $p11
+I1 = (p4 -> p1) -> $p13
+I2 = (p3 -> p4) -> $p10
+I3 = (p3 -> p2) -> $p8
+I4 = (p2 -> p3) -> $p7
+I5 = (p2 -> p1) -> $p2
+I6 = (p1 -> p4) -> $p14
+I7 = (p1 -> p2) -> $p1
+ASSUMPTIONS: p0
+RIGHT ATM: $false
+-----------------------------------------
+[30] @SAT: R7, p0 |-- $false ?
+>>> NO( {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} )
+[30] Model found (new world): M23 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3}
+[30] ics to Check:
+
+######## END [30] (model) ########
+<< M12 = {$goal, $p11, $p13, $p2, $p7, p0, p3} ;
+   M13 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} ;
+   M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
+######## END [0] (model) ########
+<< M0 = {} ;
+   M12 = {$goal, $p11, $p13, $p2, $p7, p0, p3} ;
+   M13 = {$goal, $p11, $p13, $p2, $p7, p0, p1, p3} ;
+   M6 = {$goal, $p1, $p10, $p14, $p8, p0, p4} ;
+   M3 = {$p1, $p10, $p14, $p8, p2, p4} ;
+   M4 = {$goal, $p1, $p10, $p14, $p8, p0, p2, p4} >>
++++ RESULT: CounterSatisfiable (intuitionistically)
+Flat  clauses: 24
+Impl. clauses: 9
+Atoms: 22
+Calls to the SAT-solver: 31
+Added clauses (= Yes answers): 7
+Generated worlds (= No answers): 24
+Worlds in the countermodel: 6
+********************************************************************************
+---> Output files are in the directory 'out-psi'
+---> Move into directory 'out-psi' and run command 'make' to compile them
+********************************************************************************
+Clausification time: 0.000 sec
+Prover time: 0.003 sec
