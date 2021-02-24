@@ -18,8 +18,8 @@ INTUIT_TEST_DIR=../Benchmarks
 # set TIMEOUT
 if [  -z "$1" ]; then
    cmdName=$(basename $0)
-   echo "Usage: $cmdName n" 
-   echo "where n is the timeout in seconds, for example:"
+   echo "** Usage: $cmdName n" 
+   echo "** where n is the timeout in seconds, for example:"
    echo "$cmdName 600"
    exit
 fi
@@ -46,7 +46,7 @@ date  # print start time
 # check if intuitR is defined
 if   ! command -v $INTUIT_REST  &> /dev/null
 then
-    echo "$INTUIT_REST: command not found"
+    echo "** $INTUIT_REST: command not found"
     exit 
 fi    
 

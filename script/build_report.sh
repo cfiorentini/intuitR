@@ -14,8 +14,8 @@ export LC_NUMERIC="en_US.UTF-8"  # needed to recognize decimal numbers with dot
 # set TIMEOUT
 if [  -z "$1" ]; then
    cmdName=$(basename $0)
-   echo "Usage: $cmdName n" 
-   echo "where n is the timeout in seconds used in the experiments, for example:"
+   echo "** Usage: $cmdName n" 
+   echo "** where n is the timeout in seconds used in the experiments, for example:"
    echo "$cmdName 600"
    exit
 fi
@@ -25,8 +25,11 @@ TIMEOUT="$1"
 timings_intuitR="intuitR_${TIMEOUT}_"       
 timings_intuit="intuit_${TIMEOUT}_"         
 
-
-
+if [ ! -f $timings_intuitR ]; then
+    echo "** $timings_intuitR: file not found"
+    exit
+fi    
+    
 # sum the numbers in $1
 # result: sum_timings
 function sum(){
