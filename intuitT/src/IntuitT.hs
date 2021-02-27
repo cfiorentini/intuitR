@@ -59,7 +59,7 @@ main =
 
 help :: String
 help = [r|
-Usage: intuitT [OPTION] FILE
+Usage: intuitT OPTION FILE
 
 FILE
   text file containing the input formula in TPTP syntax
