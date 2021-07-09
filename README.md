@@ -30,7 +30,7 @@ References
 [1] Fiorentini Camillo.  Efficient SAT-based Proof Search in Intuitionistic Propositional Logic.
 In: Platzer A., Sutcliffe G. (eds) Automated Deduction – CADE 28. CADE 2021. LNCS, vol 12699. Springer, Cham.
 
-[https://doi.org/10.1007/978-3-030-79876-5_13](https://doi.org/10.1007/978-3-030-79876-5_13)
+[https://doi.org/10.1007/978-3-030-79876-5_13](https://doi.org/10.1007/978-3-030-79876-5_13) (Open Access)
 
 
 
