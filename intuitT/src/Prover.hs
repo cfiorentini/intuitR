@@ -176,7 +176,7 @@ writeStatistics pst =
   ++ "\nImpl. clauses: " ++ show ( length (initImplClauses pst) )
   ++ "\nAtoms: " ++ show ( length (universe pst) )
   ++ "\nCalls to the SAT-solver: " ++ show cntSat
-  ++ "\nAdded clauses (= Yes answers): " ++  show cntAdded
+  ++ "\nAdded clauses: " ++  show cntAdded
   ++ "\nGenerated worlds (= No answers): " ++  show  cntNo
   ++ mod
 

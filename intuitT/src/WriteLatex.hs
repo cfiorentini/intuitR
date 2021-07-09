@@ -102,7 +102,7 @@ writeProblemPresentation pst  =
   ++ writeNL 1
   ++ "Calls to the SAT-solver: " ++ show (countSat pst)
   ++ writeNL 1
-  ++ "Added clauses (= YES answers): " ++ show (countAdd pst)
+  ++ "Added clauses: " ++ show (countAdd pst)
   ++ writeNL 1
   ++ "Generated worlds (= NO answers): " ++  show (countNo pst)
   ++ countMod
