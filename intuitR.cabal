@@ -27,7 +27,7 @@ build-type:          Simple
 extra-source-files:  CHANGELOG.md, README.md
 
 
-executable intuitRCade2021
+executable intuitR
   main-is:             IntuitR.hs
 
   -- Modules included in this executable, other than Main.
