@@ -6,7 +6,7 @@ String are enclosed between   [r| and  |]
 
 module  WriteModelGraphviz
   (
-     writeModelGraphviz  --  ProverEnv ->  ProverState  -> String
+     writeModelGraphviz
   )
 where
 
@@ -23,10 +23,11 @@ import Utility
 type BaseName = String
 
 
-writeModelGraphviz :: ProverEnv ->  ProverState  -> String
-writeModelGraphviz env pst  =
-  let baseName = problemName env
-      mod = fmapMod  (litToName env)   ( model  pst ) in
+writeModelGraphviz :: ProverState  -> String
+writeModelGraphviz pst  =
+  let ltToNm =  litToName pst
+      baseName = problemName pst
+      mod = fmapMod ltToNm  ( model  pst ) in
   preamble baseName ++  graphSettings 
   ++ writeWorlds mod
   ++ writeSuccs mod
@@ -69,7 +70,7 @@ tildeCod = "&#771;"
 -- writeAtm :: Show a => a -> String
 writeAtm :: Name -> String
 writeAtm p | p == false = "&perp"
-writeAtm p | p == mainGoalName = "g" ++ tildeCod
+writeAtm p | p == "$goal" = "g" ++ tildeCod
 
 writeAtm ('$': atm) =
   let (atmName, k ) = splitName atm

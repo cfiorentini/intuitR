@@ -6,8 +6,8 @@ String are enclosed between   [r| and  |]
 
 module  WriteLatex
   (
-     writeLatexTrace,           --   ProverEnv -> ProverState  -> String
-     writeLatexDerivation       --   ProverEnv -> ProverState  -> String
+     writeLatexTrace,
+     writeLatexDerivation
   )
 
 where
@@ -29,20 +29,20 @@ data Context =  Context {
   }
 
 
-mkContext :: ProverEnv -> ProverState -> Context
-mkContext env pst =
+mkContext :: ProverState -> Context
+mkContext pst =
   Context{
-    cntGoal = initGoalName env, 
-    cntCs = initClausesName env,
-    cntIcs = initImplClausesName env,
-    cntAddedCs = reverse $ addedCsName env pst          
+    cntGoal = initGoalName pst, 
+    cntCs = initClausesName pst,
+    cntIcs = initImplClausesName pst,
+    cntAddedCs = reverse $ addedCsName pst          
   }
 
-data SeqI  =  SeqI(Int, Name)         -- SeqI(k,g)   represents the sequent      R_k, X  =>   g 
-data SeqC  =  SeqC(Int,[Name],Name)   -- SeqC(k,A,b) represents the sequent      R_k, A |--c  b  (classical provability)
+data SeqI  =  SeqI(Int, Name)         -- SeqI(k,g)   represents the intuitionistic sequent Rk, X => g 
+data SeqC  =  SeqC(Int,[Name],Name)   -- SeqC(k,A,b) represents the classical sequent      Rk, A |--c b 
 
 data Derivation  =
-   LeafAxiom SeqC
+   Axiom SeqC
   | RuleEnd (SeqI, Derivation )  -- top rule of a derivation  
   | RuleImpl( SeqI, SeqC, Derivation, Int) --  RuleImpl(root,axiom, der', k )
                                            --  k is the index of the main implication formula
@@ -64,19 +64,19 @@ data Size = Small | Large
 
 -- ##################################################
 
-writeLatexTrace ::  ProverEnv -> ProverState  -> String
-writeLatexTrace env pst  =
+writeLatexTrace ::  ProverState  -> String
+writeLatexTrace pst  =
     preamble Large
-    ++ writeProblemPresentation env pst 
-    ++ writeTrace env pst 
-    ++ writeProblemDescription env pst 
+    ++ writeProblemPresentation pst 
+    ++ writeTrace pst 
+    ++ writeProblemDescription pst 
     ++ endDocument
 
-writeLatexDerivation ::  ProverEnv -> ProverState  -> String
-writeLatexDerivation env pst  =
+writeLatexDerivation ::  ProverState  -> String
+writeLatexDerivation pst  =
     preamble Small   
-    ++ writeProblemName env 
-    ++  writeDerivation  (  buildDerivation  env pst )
+    ++ writeProblemName pst
+    ++  writeDerivation  (  buildDerivation  pst )
     ++ endDocument
 
 
@@ -84,24 +84,24 @@ writeLatexDerivation env pst  =
 -- #################   TRACE  ###########################
 
 
-writeProblemPresentation :: ProverEnv -> ProverState  -> String
-writeProblemPresentation env pst  =
+writeProblemPresentation :: ProverState  -> String
+writeProblemPresentation pst  =
   let result =  if  isValidForm pst then "{\\bf Proved}"
-                else "{\\bf Countersat}"
-      ltToNm =  litToName env
+                else "{\\bf Not Proved}"
+      ltToNm =  litToName pst
       countMod = if  isValidForm pst then "" else
         writeNL 1 ++  "Worlds in the countermodel: " ++ show (sizeModel $ model pst )
   in
-  writeProblemName env   
+  writeProblemName pst  
   ++ "\\[\n"
-  ++ " \\provesi{R_0, X}{" ++ writeName (ltToNm (initGoal env)) ++ "}\\,? \n" 
+  ++ " \\provesi{R_0, X}{" ++ writeName (ltToNm (initGoal pst)) ++ "}\\,? \n" 
   ++  "\\]"
   ++ writeNL 1 ++  result  ++ writeNL 1
-  ++ "Clauses in $R_0$: " ++  show (length (initClauses env))
+  ++ "Clauses in $R_0$: " ++  show (length (initClauses pst))
   ++ writeNL 1
-  ++ "Clauses in $X$: " ++  show (length (initImplClauses env))
+  ++ "Clauses in $X$: " ++  show (length (initImplClauses pst))
   ++ writeNL 1
-  ++ "Atoms: " ++  show (countAtms env)
+  ++ "Atoms: " ++  show (countAtms pst)
   ++ writeNL 1
   ++ "Calls to the SAT-solver: " ++ show (countSat pst)
   ++ writeNL 1
@@ -111,37 +111,33 @@ writeProblemPresentation env pst  =
   ++ "$R_0$ and $X$ are defined at the end of the document" 
 
   
-writeProblemName :: ProverEnv   -> String
-writeProblemName env  =
-   "\\subsection*{Problem  \\lstinline|" ++ problemName env  ++ "|}\n"
+writeProblemName :: ProverState   -> String
+writeProblemName pst =
+   "\\subsection*{Problem  \\lstinline|" ++ problemName pst ++ "|}\n"
   
-writeProblemDescription ::  ProverEnv -> ProverState   -> String
-writeProblemDescription env pst   =
-  let context = mkContext env pst
-      initCs =  cntCs context
-      initIcs = cntIcs context
-      addedCs = cntAddedCs context 
-  in
+writeProblemDescription ::  ProverState   -> String
+writeProblemDescription pst   =
+  let context = mkContext pst in
   "\n\\subsection*{Problem description}\n"
   ++ "Flat clauses $R_0$ ("
-  ++ show (length initCs) ++  ")\n"
-  ++ if null initCs then ""
-     else "\\begin{enumerate}" ++ writeContextCs  initCs ++ "\n\\end{enumerate}\n"
+  ++ show (length $ cntCs context) ++  "):\n"
+  ++ "\\begin{enumerate}"
+  ++ writeContextCs  (cntCs context)
+  ++ "\n\\end{enumerate}\n"
   -----------------------------
   ++ "Implication clauses $X$ ("
-  ++ show (length initIcs ) ++  ")"
+  ++ show (length $ cntIcs context ) ++  "):"
   ++ writeNL 1
-  ++ writeContextIcs context initIcs
+  ++ writeContextIcs context  (cntIcs context)
   ---------------------------
   ++ "Added clauses ("
-  ++ show (length addedCs) ++  ")"
+  ++ show (length $ cntAddedCs context) ++  "):"
   ++ writeNL 1
-  ++ writeContextAddedCs context addedCs
+  ++ writeContextAddedCs context  ( cntAddedCs context )
 
 
 writeContextCs :: [Clause Name] -> String
--- assumption: nonempty list
--- writeContextCs  [] = ""
+writeContextCs  [] = ""
 writeContextCs  [c] = "\n\\item" ++ writeInMath ( writeClause c )
 writeContextCs  (c1 : cs) =
   "\n\\item " ++ writeInMath  ( writeClause  c1 )  
@@ -180,10 +176,10 @@ writeAddedClauseDef context  c =
 -- ##############################################   
 
 
-writeTrace :: ProverEnv -> ProverState -> String
-writeTrace env pst =  
-  let  context =  mkContext env pst
-       steps = getSteps $ traceName env pst
+writeTrace :: ProverState -> String
+writeTrace pst =  
+  let  context =  mkContext pst
+       steps = getSteps $ traceName pst
        (str, _) = writeSteps context  emptyModel steps in
   beginRestart 0 0 ++ str 
 
@@ -360,16 +356,16 @@ writeDerivation :: Derivation -> String
 writeDerivation  der =
   writeInMath $ writeDer der
 
-buildDerivation :: ProverEnv -> ProverState -> Derivation
-buildDerivation env pst =
-  let context = mkContext env pst
-      steps = getSteps $ traceName env pst in
+buildDerivation :: ProverState -> Derivation
+buildDerivation pst =
+  let context = mkContext pst
+      steps = getSteps $ traceName pst in
   buildDer context 0 steps
 
 
 buildDer :: Context -> Int -> [TraceStep Name] -> Derivation
 -- last: last index of a selected implication
-buildDer  context last (ProvedSat(rk,assumps,g) : _) | null assumps   = LeafAxiom (SeqC (rk,[],g) ) 
+buildDer  context last (ProvedSat(rk,assumps,g) : _) | null assumps   = Axiom (SeqC (rk,[],g) ) 
 -- ProvedSat(k,assumps,g)  (where g is the main goal)
 --  Rk |--c g 
 -- end of derivation (axiom)
@@ -380,7 +376,7 @@ buildDer  context last ( (ProvedSat(rk,assumps,right)) : steps ) =
   let der1 = buildDer context last steps
       root = SeqI(rk, cntGoal context) in
   case der1 of
-   LeafAxiom _ -> RuleEnd (root,der1)
+   Axiom _ -> RuleEnd (root,der1)
    _       ->
            RuleImpl( root, SeqC(rk,assumps,right),der1,last)
 
@@ -393,7 +389,7 @@ buildDer context last ( _ : steps ) = buildDer context last steps
 
 writeDer :: Derivation -> String
 
-writeDer (LeafAxiom seqC) =  writeSeqC seqC
+writeDer (Axiom seqC) =  writeSeqC seqC
   
 writeDer (RuleEnd(seqI,der1)) =
   "\\infer{"
@@ -480,7 +476,7 @@ writeImplClause ((a :-> b) :-> c) =
 
 writeName :: Name -> String
 writeName s | s == false = "\\bot"
-writeName s | s == mainGoalName = "\\goal"
+writeName s | s == "$goal" = "\\goal"
 writeName ('$' : atm) =
   let (atmName, k ) = splitName atm
   in "\\newAtm{" ++ atmName ++ "}{" ++ k ++ "}"

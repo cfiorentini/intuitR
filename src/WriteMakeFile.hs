@@ -6,8 +6,8 @@ String are enclosed between   [r| and  |]
 
 module  WriteMakeFile
   (
-    writeMakeFile_valid,       -- TraceName -> DerName -> String
-    writeMakeFile_countsat     -- TraceName -> ModelName -> String
+    writeMakeFile_valid,
+    writeMakeFile_countsat
   )
 where
 

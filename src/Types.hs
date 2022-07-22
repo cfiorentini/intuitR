@@ -3,22 +3,13 @@ module Types
  where
 
 import MiniSat
-import Data.Maybe
-import Control.Monad.Reader
-import Control.Monad.State
-import Control.Monad.RWS
-
-import Data.List
 import qualified Data.PartialOrd as POrd
 import qualified Data.Set as Set
-import qualified Data.Map as Map
 
 -- ######### FORMULA ##########
 
 type Name = String
-type GoalName = Name
 
--- some constant
 
 false :: Name
 false = "$false"
@@ -27,78 +18,26 @@ false = "$false"
 true :: Name
 true = "$true"
 
-mainGoalName :: Name
-mainGoalName = "$goal"
-
-isNewName :: Name -> Bool
-isNewName p =
-  head p == '$'
 
 
-
-data Form a 
-  = TRUE
+data Form
+  = Atom Name
+  | Form :&: Form
+  | Form :|: Form
+  | Form :=>: Form
+  | Form :<=>: Form
+  | TRUE
   | FALSE
-  | Atom a
-  | (Form a) :&: (Form a)
-  | (Form a) :|: (Form a)
-  | (Form a ) :=>: (Form a)
-  | (Form a) :<=>: (Form a)
-   deriving ( Eq, Ord )
+ deriving ( Eq, Ord )
 
-
-instance (Show a) =>  Show (Form a) where
-  show (Atom a)    = show a
+instance Show Form where
+  show (Atom a)    = a
   show (p :&: q)   = "(" ++ show p ++ " & " ++ show q ++ ")"
   show (p :|: q)   = "(" ++ show p ++ " | " ++ show q ++ ")"
   show (p :=>: q)  = "(" ++ show p ++ " => " ++ show q ++ ")"
   show (p :<=>: q) = "(" ++ show p ++ " <=> " ++ show q ++ ")"
   show TRUE        =  true  --- "$true"
   show FALSE       =  false -- "$false"
-
-
-instance Functor Form where
-  fmap g (Atom p)    = Atom (g p)
-  fmap g (f1 :&: f2)   = (fmap g f1)  :&:  (fmap g f2 )
-  fmap g (f1 :|: f2)   = (fmap g f1)  :|:  (fmap g f2 )
-  fmap g (f1 :=>: f2)  = (fmap g f1)  :=>:  (fmap g f2 )
-  fmap g (f1 :<=>: f2) = (fmap g f1)  :<=>:  (fmap g f2 )
-  fmap g TRUE        =  TRUE
-  fmap g FALSE       =  FALSE 
-
-
-data LogicalOp = NoOp | NegOp | AndOp | OrOp | ImplOp | IffOp 
-  deriving Eq
-
-mainLogicalOp :: Form Name-> LogicalOp
-
-mainLogicalOp  f | f == TRUE || f == FALSE = NoOp
-mainLogicalOp (Atom _) = NoOp 
-mainLogicalOp (f1 :&: f2 ) = AndOp
-mainLogicalOp (f1 :|: f2 ) = OrOp
-mainLogicalOp (f1 :=>: FALSE ) = NegOp
-mainLogicalOp (f1 :=>: Atom f2 ) | f2 == false = NegOp
-mainLogicalOp (f1 :=>: f2 ) = ImplOp
-mainLogicalOp (f1 :<=>: f2 ) = IffOp
-
-
-
--- used to represent TPTP formulas
-data Input a = Input Name FormRole a
- deriving ( Eq, Ord )
-
-instance Show a => Show (Input a) where
-  show (Input name role x) =
-    "fof(" ++ name ++ ", " ++ show role ++ ", " ++ show x ++ " )."
-
-data FormRole =
-  Axiom
-  | Conjecture
- deriving ( Eq, Ord )
-
-instance Show FormRole where
-  show Axiom       = "axiom"
-  show Conjecture = "conjecture"
 
 
 
@@ -128,201 +67,43 @@ instance (Show a) => Show (Clause a) where
 mapImplClause ::  (a -> b) -> ImplClause a -> ImplClause b
 mapImplClause f ((a :-> b):-> c) = (f a :->  f b):->  f c 
 
-
-data ClausificationType = WeakClausification | StrongClausification
-  deriving Eq
-
-instance Show  ClausificationType where
-  show  WeakClausification =  "Weak clausification"
-  show  StrongClausification =  "Strong clausification" 
-
---  SIMPLE FORMULA sf
---  sf ::= (p1 & p2)  ||  (p1 | p2)  ||  (p1 => p2) || (p1 <=> p2 )
---           p1, p2 atoms
-
-data SimpleForm 
-  = Name :&&: Name
-  | Name :||: Name
-  | Name :==>: Name
-  | Name :<==>: Name
- deriving ( Eq, Ord, Show )
-
-
-simpleFormToForm :: SimpleForm -> Form Name
-simpleFormToForm (n1 :&&: n2)   = (Atom n1)  :&: (Atom n2)
-simpleFormToForm (n1 :||: n2)   = (Atom n1)  :|: (Atom n2)
-simpleFormToForm (n1 :==>: n2)  = (Atom n1)  :=>: (Atom n2)
-simpleFormToForm (n1 :<==>: n2) = (Atom n1)  :<=>: (Atom n2) 
-
-
-
-
-type Cache = Map.Map Name SimpleForm 
-
-cache_to_nameFormList :: Cache -> [(Name, Form Name)]
-cache_to_nameFormList cache =
-  map ( \(name,sf ) -> ( name, simpleFormToForm sf) )  (Map.toList cache)
-
-cache_to_sortedNameFormList :: Cache -> [(Name, Form Name)]
-cache_to_sortedNameFormList  cache =
-  sortOn (indexNewName .fst ) ( cache_to_nameFormList cache)
-
-cacheSize :: Cache -> Int
-cacheSize  = Map.size 
-
-
-
-indexNewName  :: Name -> Int
--- newName: $p0, $p1, ....
--- $p0 |-> 0,   $p1 |-> 1,  $p10 |-> 10, ...
-indexNewName newName =
-  -- read $ fromJust $ stripPrefix "$p" newName
-  read $ fromMaybe "-1" $ stripPrefix "$p" newName  -- ????????
-
-
-
 -- ########  PROVER STATE ####
 
-data SearchResult  = CountSat | Valid 
-
--- constant fields 
-data ProverEnv =
-  ProverEnv{
+data ProverState =
+  ProverState{
      problemName :: String, -- the name of the problem
+     solver :: Solver,   -- the SAT-solver 
      universe :: [Lit],   -- all literals occurring in the solver
      initClauses :: [Clause Lit],  -- initial cs (flat clauses)
      initImplClauses :: [ImplClause Lit],  -- initial ics (implication clauses)
      initGoal ::  Lit, -- main goal
-     litToName_map ::  Map.Map Lit  Name ,  -- maps a Lit to the corresponding atom
+     litToName :: Lit -> Name,   -- maps a Lit to the corresponding atom 
      countAtms :: Int,   -- count the atoms in (initClauses,initImplClauses,initGoal)
-     traceLevel :: TraceLevel -- trace level
-  }
-
-mkProverEnv :: String -> [Lit] ->  [Clause Lit] -> [ImplClause Lit] -> Lit -> Map.Map Lit Name -> Int -> TraceLevel -> ProverEnv
-mkProverEnv problName univ cs ics goal ltToNm_map cntAtms  traceLev =
-   ProverEnv{
-            problemName = problName,
-            universe = univ,
-            initClauses = cs,
-            initImplClauses = ics,
-            initGoal =  goal,
-            litToName_map = ltToNm_map,
-            countAtms = cntAtms,
-            traceLevel = traceLev
-            }
-
-
--- fields that can be updated 
-data ProverState =
-  ProverState{
-     solver :: Solver,   -- the SAT-solver 
      countSat :: Int,    -- count the calls to the SAT-solver
      countRest :: Int,   -- count the restarts
      addedCs :: [Clause Lit] ,  -- clauses added to the  SAT-solver (learned clauses)
      model :: Model Lit,    -- model 
      modelsSize :: [Int], -- list of the size (number of worlds)of the generated models (just before a restart)
      trace :: Trace Lit,  --  trace
+     traceLevel :: TraceLevel, -- trace level
      isValidForm :: Bool -- True iff the input formula is valid
   }
 
-mkProverState :: Solver  -> ProverState
-mkProverState sat   =
-   ProverState{
-            solver = sat,
-            countSat = 0,
-            countRest = 0,
-            addedCs = [],
-            model = emptyModel,
-            modelsSize = [],
-            trace = emptyTrace,
-            isValidForm = False
-            }
+initGoalName :: ProverState ->  Name
+initGoalName gst = ltToNm $ initGoal gst
+ where  ltToNm = litToName gst 
 
+initClausesName :: ProverState ->  [Clause Name]
+initClausesName gst = map (fmap ltToNm) (initClauses gst) 
+   where  ltToNm = litToName gst 
 
--- newtype RWST r w s (m :: * -> *) a
--- A monad transformer adding reading an environment of type r, collecting an output of type w and updating a state of type s to an inner monad m.
--- The Writer w is not used 
+initImplClausesName ::  ProverState ->  [ImplClause Name]
+initImplClausesName gst = map (mapImplClause ltToNm)  (initImplClauses gst)
+    where  ltToNm = litToName gst 
 
-type ProverConf = RWST ProverEnv () ProverState IO
-
-
--- the name of a literal
--- we assume that the literal is defined
-litToName ::   ProverEnv -> Lit ->  Name
-litToName  env lit =
-     fromJust $ Map.lookup lit (litToName_map env)
-     
-initGoalName :: ProverEnv ->  GoalName 
-initGoalName env =
-   ltToNm $  initGoal env
-   where
-     ltToNm =   litToName env   -- > Lit ->  Name
-
-initClausesName :: ProverEnv -> [Clause Name]
-initClausesName env  =
-  map (fmap ltToNm) (initClauses env)
-  where
-    ltToNm =   litToName env   -- > Lit ->  Name
-
-initImplClausesName ::  ProverEnv ->   [ImplClause Name]
-initImplClausesName env  =
-  map (mapImplClause ltToNm) (initImplClauses env)
-  where
-    ltToNm =   litToName env   -- > Lit ->  Name
-
-
-addedCsName :: ProverEnv -> ProverState ->  [Clause Name]
-addedCsName env pst =
-  map (fmap ltToNm ) (addedCs pst) 
-    where
-    ltToNm =   litToName env   -- > Lit ->  Name
-
--- ####### INNER LOOP #######
---  record  associated with a world
-
-data WorldRec a =
-  WorldRec{
-     world ::  World a,         -- world w
-     toCheck :: [ImplClause a], -- to be checked 
-     checked ::  [ImplClause a]  -- checked (all the ics are realized in w, see the comment below) 
-     }
-
-
-{-  The inner loops works on a list 
-
-
-      [ wRec1,  wRec2,  .... ]   
-
-For every element
-
-  wRec = {  world = w , toCheck = ics , checked = icsChecked} 
-
-in the list we assume that:
-
-1)  ics U icsChecked is the set of *all* the impl. clauses (a:->b):->c such that  a\not\in w and  b\not\in w and  c\not\in w
-2)  For every    (a:->b):->c in icsChecked   there is a world w' in the current model such that:
-
-    w < w' and  a \in w' and b \not \in w'
-
-    This implies that w |>  (a:->b):->c  (namely, w realizes (a:->b):->c)
-
--}
-
--- make a new WorlRec with empty  checked list  
-mkWorldRec :: World Lit -> [ImplClause Lit] -> WorldRec Lit
-mkWorldRec w ics =
-  WorldRec{world =  w , toCheck = ics ,  checked = [] } 
-         
-emptyToCheck ::  WorldRec Lit -> Bool
-emptyToCheck wRec = null $ toCheck wRec
-
--- the first ic in toCheck is moved to the checked list
--- We assume that the toCheck list is not empty
-nextToCheck ::  WorldRec Lit -> WorldRec Lit 
-nextToCheck (WorldRec{world = w , toCheck = ic : ics , checked = icsChecked} ) =
-  WorldRec{world = w , toCheck = ics , checked = ic : icsChecked}
-
-
+addedCsName :: ProverState ->  [Clause Name]
+addedCsName gst = map (fmap ltToNm) (addedCs gst) 
+   where  ltToNm = litToName gst 
 
 -- ##################    MODEL  ########################à
 
@@ -352,6 +133,7 @@ instance Ord a => POrd.PartialOrd (World a)  where
   (<=) (Wd(k1,s1)) (Wd(k2,s2)) = Set.isSubsetOf s1 s2
   (<)  (Wd(k1,s1)) (Wd(k2,s2)) = Set.isProperSubsetOf s1 s2
 
+--data Model a = Mod( Set.Set(  World a ) ) 
 data Model a = Mod( [World a ] ) 
   deriving (Show)
 
@@ -403,7 +185,6 @@ data TraceStep a =
   | NewWorld( Int, [a] ) 
   | ProvedSat(Int,[a],a) 
   | NewClause(Int,Int, Clause a) 
-
 {-
 
 Check(k, impl):  check the pair < world_k , impl > 
@@ -424,11 +205,9 @@ instance Functor TraceStep where
   fmap f ( NewClause(cntSat, cntRest,c) ) = NewClause(cntSat,cntRest, fmap f c)
 
 
-
-traceName ::  ProverEnv -> ProverState -> Trace Name
-traceName env pst = fmap (litToName env) (trace pst) 
-
-
+traceName ::  ProverState -> Trace Name
+traceName gst = fmap ltToNm (trace gst) 
+  where  ltToNm = litToName gst
 
 data Trace a = Trace [TraceStep a]
 
@@ -450,49 +229,3 @@ addSteps (s1 :steps) tr =
 getSteps :: Trace a -> [TraceStep a]
 getSteps (Trace steps) = reverse steps
 
-
-
-type Substitution = Map.Map Name (Form Name)
-
-
-applySubst :: Substitution -> Form Name -> Form Name
-
-applySubst subst TRUE = TRUE
-applySubst subst FALSE = FALSE
-
-applySubst subst (Atom a) =
-  case Map.lookup a subst of
-      Just f -> applySubst subst f
-      Nothing -> Atom a
-
-applySubst subst (f1 :&: f2) =
-  (applySubst subst f1 ) :&: (applySubst subst f2)
-
-applySubst subst (f1 :|: f2) =
-  (applySubst subst f1 ) :|: (applySubst subst f2)
-
-applySubst subst (f1 :=>: f2) =
-  (applySubst subst f1 ) :=>: (applySubst subst f2)
-
-applySubst subst (f1 :<=>: f2) =
-  (applySubst subst f1 ) :<=>: (applySubst subst f2)
-
-
-cache_to_nameFormSubstList ::  Cache ->   [(Name, Form Name)]
---  list (name,form) such that  form is the formula equivalent to name
-cache_to_nameFormSubstList  cache   =
-  let nameFormList = cache_to_sortedNameFormList cache
-      subst = Map.fromList  nameFormList
-  in  map (\(name,form) ->  (name, (applySubst subst form)) ) nameFormList
-
-cache_to_subst  :: Cache   -> Substitution
--- substitution     extracted from the cache
-cache_to_subst  = Map.fromList . cache_to_nameFormSubstList  
-
-
-sortNames ::  [Name] -> [Name]  
-sortNames xs =
-  let (g,ys) = partition (\x -> x == "$goal") xs
-      (newAtms,atms)  =  partition isNewName ys
-  in sort atms ++ g ++ sortOn indexNewName newAtms  
-  
