@@ -14,7 +14,6 @@ import Data.List
 import qualified Data.PartialOrd as POrd
 import System.Directory
 import System.FilePath
-import Control.Monad (when)
 import Control.Monad.State
 import Control.Monad.Reader
 import Control.Monad.RWS

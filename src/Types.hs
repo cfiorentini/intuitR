@@ -31,8 +31,8 @@ mainGoalName :: Name
 mainGoalName = "$goal"
 
 isNewName :: Name -> Bool
-isNewName ('$':_) = True
-isNewName _       = False
+isNewName p =
+  head p == '$'
 
 
 

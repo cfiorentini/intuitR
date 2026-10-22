@@ -1,10 +1,10 @@
 {-# LANGUAGE TypeOperators #-}
-module Clausify
-  (  clausify
+module ClausifyWeak
+  (  clausifyInputForms   -- [Input Form] -> ([Clause Name],[ImplClause Name],GoalName,Int)
   )
  where
 
-import ParseProblem hiding ( name )
+-- import ParseProblem hiding ( name )
 import qualified Control.Applicative as CA
 import qualified Data.Map as Map
 import Data.List
@@ -15,15 +15,15 @@ import Control.Monad.State
 import Types
 
 
-clausify :: [Input Form] -> IO([Clause Name],[ImplClause Name],Name,Int)
+clausifyInputForms :: [Input (Form Name)] -> ([Clause Name],[ImplClause Name],GoalName,Int,Cache)
 --  build the clausification (cs,ics,goal) of the input formula,
 --  count the number of reduced implication clauses, as defined below 
-clausify fs =
-  do
-  let  (cs0, ics0,goal) = clausify_base (goalify fs)
-  (countImplReductions, cs1,ics) <- reduceImplClauses ics0
-  let  cs  =  cs0 ++ cs1 ++ [ [b] :=> [c] | (a :-> b ) :-> c <- ics, b /= false ]
-  return (cs,ics,goal,countImplReductions)       
+clausifyInputForms inputForms =
+  let  (cs0, ics0,goal) = clausify_base (goalify inputForms)
+       (countImplReductions, cs1,ics) = reduceImplClauses $ nub ics0 -- nub: eliminate the duplicated ics
+       -- (countImplReductions, cs1,ics) = (0, [], ics0)
+       cs  =  cs0 ++ cs1 ++ [ [b] :=> [c] | (a :-> b ) :-> c <- ics, b /= false, b /= c ]
+  in (cs,ics,goal,countImplReductions, Map.empty) -- XXXXXXX  TODO       
 -- count: number of reduced implication clauses
 
 {-
@@ -42,7 +42,7 @@ where newAtm is a new propositional variable
 
 -}
 
-reduceImplClauses ::  [ImplClause Name] ->   IO (Int,[Clause Name], [ImplClause Name])
+reduceImplClauses ::  [ImplClause Name] ->   (Int,[Clause Name], [ImplClause Name])
 --  ** Same strategy as ClaessenRosen **
 --  Return (tot,cs1,ics1) where:
 --  tot: total amount of clauses with the same antecedent
@@ -51,9 +51,8 @@ reduceImplClauses ::  [ImplClause Name] ->   IO (Int,[Clause Name], [ImplClause 
 --  *NOTE*:  if no implication clauses is reduced, ics1 is in general a permutation of ics 
 
 reduceImplClauses ics =  
-  do
   let sames = Map.toList (Map.fromListWith (++) [ (a:->b,[c]) | ((a:->b):->c) <- ics ])
-  return $ evalState ( reduceImplClausesMon sames )  (0,0,[],[])
+  in evalState ( reduceImplClausesMon sames )  (0,0,[],[])
 
 
 
@@ -109,20 +108,20 @@ reduceImplClausesMon ( (a :-> b,xs)  : sames) =
 
 
 --------------------------------------------------------
--- ORIGINAL CLAUSIFICATION PROCEDYRE BY CLAESSEN&ROSEN
+-- ORIGINAL CLAUSIFICATION PROCEDURE BY CLAESSEN&ROSEN
 
-clausify_base :: [Form] -> ([Clause Name],[ImplClause Name],Name)
-clausify_base fs =  (cs, ics,"$goal")
+clausify_base :: [Form Name] -> ([Clause Name],[ImplClause Name],Name)
+clausify_base fs =  (cs, ics,mainGoalName)
   where
       (_,cs,ics) = run (sequence_ [ clauseForm (simplify f) | f <- fs ]) 
  
-goalify :: [Input Form] -> [Form]
+goalify :: [Input (Form Name)] -> [Form Name]
 goalify []                            = []
-goalify (Input s Fact f       : inps) = f : goalify inps
+goalify (Input s Axiom f       : inps) = f : goalify inps
 goalify (Input s Conjecture f : inps) =
   case f of
     a :=>: b -> a : goalify (Input s Conjecture b : inps)
-    _        -> (f :=>: Atom "$goal") : goalify inps
+    _        -> (f :=>: Atom mainGoalName) : goalify inps
 
 
 prop :: Int -> Name
@@ -130,7 +129,7 @@ prop k = "$p" ++ show k
 
 --------------------------------------------------------------------------------
 
-simplify :: Form -> Form
+simplify :: Form Name -> Form Name
 simplify (p :&: q) = simplify p .&. simplify q
  where
   p .&. q | p == q = p
@@ -174,7 +173,7 @@ simplify p = p
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-clauseForm :: Form -> M ()
+clauseForm :: Form Name -> M ()
 clauseForm TRUE        = do return ()
 clauseForm FALSE       = do clause ([] :=> [])
 clauseForm (Atom a)    = do clause ([] :=> [a])
@@ -187,13 +186,13 @@ clauseForm (p :<=>: q) = do a <- nameEquivWith p
 clauseForm (p :|: q)   = do clauseOr [] [p,q]
 clauseForm (p :=>: q)  = do clauseImpl p q
 
-clauseOr :: [Name] -> [Form] -> M ()
+clauseOr :: [Name] -> [Form Name] -> M ()
 clauseOr as []               = do clause ([] :=> as)
 clauseOr as ((p :|: q) : ps) = do clauseOr as (p : q : ps)
 clauseOr as (p         : ps) = do a <- nameThatImplies p
                                   clauseOr (a:as) ps
 
-clauseImpl :: Form -> Form -> M ()
+clauseImpl :: Form Name -> Form Name -> M ()
 clauseImpl (Atom a)  (Atom b)   = do clause ([a] :=> [b])
 clauseImpl (Atom a)  (p :&: q)  = do clauseImpl (Atom a) p
                                      clauseImpl (Atom a) q
@@ -208,14 +207,14 @@ clauseImpl p         q          = do as <- namesAnd p
                                      bs <- namesOr  q
                                      clause (as :=> bs)
 
-namesAnd :: Form -> M [Name]
+namesAnd :: Form Name -> M [Name]
 namesAnd (p :&: q) = do as <- namesAnd p
                         bs <- namesAnd q
                         return (as ++ bs)
 namesAnd p         = do a <- nameImpliedBy p
                         return [a]
 
-namesOr :: Form -> M [Name]
+namesOr :: Form Name -> M [Name]
 namesOr (p :|: q) = do as <- namesOr p
                        bs <- namesOr q
                        return (as ++ bs)
@@ -226,7 +225,7 @@ nameEquivWith   = name True True
 nameThatImplies = name True False
 nameImpliedBy   = name False True
 
-name :: Bool -> Bool -> Form -> M Name
+name :: Bool -> Bool -> Form Name -> M Name
 name impls impld (Atom a) =
   do return a
 
@@ -271,15 +270,16 @@ name impls impld (p :<=>: q) =
      return c
 
 --------------------------------------------------------------------------------
-
+{-
 data Triple
   = Name :&&: Name
   | Name :||: Name
   | Name :==>: Name
   | Name :<==>: Name
  deriving ( Eq, Ord, Show )
+-}
 
-type Cache = Map.Map Triple (Name, Bool, Bool)
+type LocalCache = Map.Map SimpleForm (Name, Bool, Bool)
 
 data Seq a = List [a] | Seq a :++: Seq a
 
@@ -288,7 +288,7 @@ toList (List xs)           = xs
 toList (List xs :++: q)    = xs ++ toList q
 toList ((p :++: q) :++: r) = toList (p :++: (q :++: r))
 
-newtype M a = M (Cache -> Int -> (a, Cache, Int, Seq (Clause Name), Seq (ImplClause Name)))
+newtype M a = M (LocalCache -> Int -> (a, LocalCache, Int, Seq (Clause Name), Seq (ImplClause Name)))
 
 instance Functor M where
   f `fmap` M h =
@@ -313,7 +313,7 @@ run (M h) = (x, toList cs, toList ics)
  where
   (x, _, _, cs, ics) = h Map.empty 0
 
-nameFor :: Bool -> Bool -> Triple -> M (Name, Bool, Bool)
+nameFor :: Bool -> Bool -> SimpleForm -> M (Name, Bool, Bool)
 nameFor impls impld t =
   M (\c n -> case Map.lookup t' c of
                Just (x, impls', impld') ->
