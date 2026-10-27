@@ -41,7 +41,7 @@ languageDef =
               Token.identLetter     = alphaNum <|> oneOf "!$?^+-_",
               Token.reservedNames   = [ "fof" 
                                       ],
-              Token.reservedOpNames = ["$true", "$false", "~", "&", "|", "=>", "<=>"]
+              Token.reservedOpNames = ["$true", "$false", "~", "&", "|", "=>", "->", "<=>","<->"]
             }
 
 
